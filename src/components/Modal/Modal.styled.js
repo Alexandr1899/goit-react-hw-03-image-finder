@@ -1,16 +1,18 @@
-.backdrop {
+import styled from "styled-components";
+
+export const ModalBox = styled.div`
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.7);
+    background-color: rgba(0, 0, 0, 0.8);
     transform: scale(1);
     transition-duration: 250ms;
     transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-}
+`
 
-.modal {
+export const ModalField = styled.div`
     position: absolute;
     top: 50%;
     left: 50%;
@@ -19,4 +21,9 @@
     align-items: center;
     padding: 40px;
     overflow: hidden;
-}
+`
+
+export const ModalImage = styled.img`
+    width: 1000px;
+    height: auto
+`
