@@ -16,7 +16,8 @@ export class AppBox extends Component {
         showModal: false,
         modalSrc: "",
         status: "idle",
-        error: null
+        error: null,
+        totalHits: 0
     }
     componentDidUpdate(_, prevState) {
         const {query, page, pictures} = this.state
@@ -28,7 +29,7 @@ export class AppBox extends Component {
                 .then(response => {
                     this.setState({status: "resolved"})
                     const results = response.data.hits
-                    this.setState({ pictures: [...pictures, ...results] })
+                    this.setState({ pictures: [...pictures, ...results], totalHits: response.data.totalHits })
                 }).catch(error => {
                 this.setState({error, status: "rejected"})
             })
@@ -60,7 +61,7 @@ export class AppBox extends Component {
     }
     
     render() {
-        const {status, pictures, query, showModal, modalSrc} = this.state
+        const {status, pictures, query, showModal, modalSrc, totalHits} = this.state
         return (
             <>
                 <Searchbar>
@@ -73,7 +74,7 @@ export class AppBox extends Component {
                 {status === "resolved" &&
                     <>
                     <ImageGallery imagesArray={pictures} openModalImage={this.openModalImage} query={query} />
-                    {pictures.length !== 0 && <Button loadMore={this.loadMore} />}
+                    {pictures.length !== 0 && pictures.length < totalHits && <Button loadMore={this.loadMore} />}
                     </>
                 }
                 
